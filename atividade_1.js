@@ -1,8 +1,27 @@
 const readline = require('readline/promises');
+/*
+    JovemTech - Lógica de Programação
+    LISTA DE ATIVIDADES 1: Exercícios Práticos
+
+    Código unificado em JavaScript contendo a resolução de oito questões:
+    1. Cálculo de idade pelo ano de nascimento.
+    2. Antecessor e sucessor de um número inteiro.
+    3. Cálculo salarial pelas horas trabalhadas.
+    4. Desconto de 15% em uma compra.
+    5. Média escolar e resultado de aprovação.
+    6. Situação definida pela idade.
+    7. Desconto promocional condicional.
+    8. Critérios para seleção de estagiários.
+
+    Use o menu interativo para escolher e executar cada exercício.
+*/
+
+const readline = require('readline/promises');
 const { stdin: input, stdout: output } = require('process');
 
 // --- FUNÇÕES DOS EXERCÍCIOS ---
 
+// Cada função recebe rl para ler respostas do usuário e exibir o resultado.
 async function exercicio1(rl) {
     console.log("\n--- Exercício 1: Cálculo de Idade ---");
     const anoNascimento = parseInt(await rl.question("Informe o ano de nascimento: "));
@@ -11,12 +30,14 @@ async function exercicio1(rl) {
     console.log(`-> Sua idade é: ${idade} anos.`);
 }
 
+// Lê um inteiro e mostra o número imediatamente anterior e posterior.
 async function exercicio2(rl) {
     console.log("\n--- Exercício 2: Antecessor e Sucessor ---");
     const numero = parseInt(await rl.question("Informe um número inteiro: "));
     console.log(`-> Número: ${numero} | Antecessor: ${numero - 1} | Sucessor: ${numero + 1}`);
 }
 
+// Calcula o salário multiplicando as horas pelo valor fixo de cada hora.
 async function exercicio3(rl) {
     console.log("\n--- Exercício 3: Cálculo Salarial ---");
     const horasTrabalhadas = parseFloat(await rl.question("Informe o número de horas trabalhadas: "));
@@ -25,6 +46,7 @@ async function exercicio3(rl) {
     console.log(`-> O salário total é: R$ ${salario.toFixed(2)}`);
 }
 
+// Lê o cliente e calcula o total da compra com 15% de desconto.
 async function exercicio4(rl) {
     console.log("\n--- Exercício 4: Desconto de 15% ---");
     const nomeCliente = await rl.question("Informe o nome do cliente: ");
@@ -34,6 +56,7 @@ async function exercicio4(rl) {
     console.log(`-> Valor total com 15% de desconto: R$ ${valorComDesconto.toFixed(2)}`);
 }
 
+// Calcula a média das três notas e compara o resultado com a média 7.
 async function exercicio5(rl) {
     console.log("\n=== Exercício 5: Média Escolar ===");
     const nota1 = parseFloat(await rl.question("Informe a primeira nota: "));
@@ -48,6 +71,7 @@ async function exercicio5(rl) {
     }
 }
 
+// Informa aposentadoria para idade a partir de 60 anos; caso contrário, trabalho formal.
 async function exercicio6(rl) {
     console.log("\n--- Exercício 6: Situação por Idade ---");
     const idadePessoa = parseInt(await rl.question("Informe a idade: "));
@@ -59,6 +83,7 @@ async function exercicio6(rl) {
     }
 }
 
+// Aplica 20% de desconto se houver cartão fidelidade ou a compra superar R$ 500.
 async function exercicio7(rl) {
     console.log("\n--- Exercício 7: Desconto Condicional ---");
     const valorTotal = parseFloat(await rl.question("Informe o valor total da compra (R$): "));
@@ -72,6 +97,7 @@ async function exercicio7(rl) {
     }
 }
 
+// Avalia se a pessoa cursa o ensino médio e tem menos de 18 anos.
 async function exercicio8(rl) {
     console.log("\n--- Exercício 8: Seleção de Estagiários ---");
     const cursandoEnsinoMedio = (await rl.question("Está cursando o ensino médio? (SIM/NAO): ")).trim().toUpperCase();
@@ -86,6 +112,7 @@ async function exercicio8(rl) {
 
 // --- MENU PRINCIPAL ---
 
+// Cria a interface do terminal e repete o menu até o usuário escolher sair.
 async function main() {
     const rl = readline.createInterface({ input, output });
     let rodando = true;
@@ -106,6 +133,7 @@ async function main() {
 
         const opcao = await rl.question("\nEscolha uma opção (0-8): ");
 
+        // Encaminha cada opção do menu para seu exercício correspondente.
         switch (opcao.trim()) {
             case '1': await exercicio1(rl); break;
             case '2': await exercicio2(rl); break;
@@ -127,4 +155,5 @@ async function main() {
     rl.close();
 }
 
+// Ponto de entrada: inicia o menu interativo.
 main();
