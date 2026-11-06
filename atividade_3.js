@@ -1,10 +1,14 @@
+
 /*
   JovemTech - Lógica de Programação
-  LISTA DE ATIVIDADES 2: Exercícios Práticos - Laços de Repetição (PARA, ENQUANTO, REPITA)
-  
-  Código contendo a resolução de todas as questões.
+  LISTA DE ATIVIDADES 3: Exercícios Práticos - Vetores
+
+  Código unificado em JavaScript para resolver oito atividades:
+  cálculos básicos, busca em vetor, análise de números e análise de idades.
+  O programa recebe os dados pelo terminal e apresenta os resultados.
 */
 
+// Importação do módulo readline para capturar entradas via terminal (Node.js)
 const readline = require('readline');
 
 const rl = readline.createInterface({
@@ -12,154 +16,198 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
+// Helper para fazer perguntas com Promises (async/await)
 const askQuestion = (query) => {
+  // Faz a pergunta no terminal e entrega a resposta quando o usuário digita.
+  // A Promise permite que main() espere a resposta usando await.
   return new Promise((resolve) => rl.question(query, resolve));
 };
 
-async function executarLista2() {
+// Função principal do programa: executa as atividades em ordem e aguarda
+// as entradas do usuário sem bloquear a sequência do código.
+async function main() {
   console.log("==================================================");
-  console.log("   RESOLUÇÃO DA LISTA DE ATIVIDADES 2 - LAÇOS    ");
+  console.log("   RESOLUÇÃO DA LISTA DE ATIVIDADES 3 - VETORES   ");
   console.log("==================================================\n");
 
-  // ==================================================================
-  // SEÇÃO 1: LAÇO DE REPETIÇÃO PARA (for)
-  // ==================================================================
-  console.log("=== SEÇÃO 1: LAÇO PARA (for) ===\n");
+  // ------------------------------------------------------------------
+  // QUESTÃO 1: Calcular ferraduras necessárias para cavalos
+  // ------------------------------------------------------------------
+  console.log("--- Questão 1: Quantidade de Ferraduras ---");
+  const qtdCavalosInput = await askQuestion("Digite a quantidade de cavalos comprados: ");
+  const qtdCavalos = parseInt(qtdCavalosInput) || 0;
+  // Cada cavalo utiliza quatro ferraduras.
+  const totalFerraduras = qtdCavalos * 4;
+  console.log(`Para ${qtdCavalos} cavalo(s), serão necessárias ${totalFerraduras} ferraduras.\n`);
 
-  // PARA 1: Números pares de 2 até 100
-  console.log("--- Questão 1 (PARA): Números pares de 2 até 100 ---");
-  let pares = [];
-  for (let i = 2; i <= 100; i += 2) {
-    pares.push(i);
-  }
-  console.log(pares.join(", ") + "\n");
+  // ------------------------------------------------------------------
+  // QUESTÃO 2: Sexta parte de um número real
+  // ------------------------------------------------------------------
+  console.log("--- Questão 2: Sexta Parte de um Número ---");
+  const numRealInput = await askQuestion("Digite um número real: ");
+  const numReal = parseFloat(numRealInput) || 0;
+  // A sexta parte é o número dividido por seis.
+  const sextaParte = numReal / 6;
+  console.log(`A sexta parte de ${numReal} é: ${sextaParte.toFixed(4)}\n`);
 
-  // PARA 2: Tabuada do 7
-  console.log("--- Questão 2 (PARA): Tabuada do 7 ---");
-  for (let i = 1; i <= 10; i++) {
-    console.log(`7 x ${i} = ${7 * i}`);
-  }
-  console.log("");
+  // ------------------------------------------------------------------
+  // QUESTÃO 3: Área de um triângulo retângulo
+  // ------------------------------------------------------------------
+  console.log("--- Questão 3: Área do Triângulo Retângulo ---");
+  const baseInput = await askQuestion("Digite o valor da base (cateto 1): ");
+  const alturaInput = await askQuestion("Digite o valor da altura (cateto 2): ");
+  const base = parseFloat(baseInput) || 0;
+  const altura = parseFloat(alturaInput) || 0;
+  // Fórmula da área do triângulo: base × altura ÷ 2.
+  const areaTriangulo = (base * altura) / 2;
+  console.log(`A área do triângulo retângulo é: ${areaTriangulo.toFixed(2)}\n`);
 
-  // PARA 3: Soma dos números de 1 a 20
-  console.log("--- Questão 3 (PARA): Soma dos números de 1 a 20 ---");
-  let soma1a20 = 0;
-  for (let i = 1; i <= 20; i++) {
-    soma1a20 += i;
-  }
-  console.log(`A soma dos números de 1 a 20 é: ${soma1a20}\n`);
-
-  // PARA 4: Números ímpares de 1 a 99
-  console.log("--- Questão 4 (PARA): Números ímpares de 1 a 99 ---");
-  let impares = [];
-  for (let i = 1; i < 100; i += 2) {
-    impares.push(i);
-  }
-  console.log(impares.join(", ") + "\n");
-
-  // ==================================================================
-  // SEÇÃO 2: LAÇO DE REPETIÇÃO ENQUANTO (while)
-  // ==================================================================
-  console.log("=== SEÇÃO 2: LAÇO ENQUANTO (while) ===\n");
-
-  // ENQUANTO 1: Ler números enquanto o valor for positivo
-  console.log("--- Questão 1 (ENQUANTO): Ler números enquanto positivo ---");
-  let numPositivo = parseFloat(await askQuestion("Digite um número (negativo para parar): "));
-  while (numPositivo >= 0) {
-    console.log(`Você digitou o número positivo: ${numPositivo}`);
-    numPositivo = parseFloat(await askQuestion("Digite outro número (negativo para parar): "));
-  }
-  console.log("Número negativo digitado. Encerrado!\n");
-
-  // ENQUANTO 2: Imprimir números pares menores que o número digitado
-  console.log("--- Questão 2 (ENQUANTO): Pares menores que N ---");
-  const limiteN = parseInt(await askQuestion("Digite um número inteiro: "));
-  console.log(`Números pares menores que ${limiteN}:`);
-  let contadorPar = 2;
-  while (contadorPar < limiteN) {
-    console.log(contadorPar);
-    contadorPar += 2;
-  }
-  console.log("");
-
-  // ENQUANTO 3: Continuar lendo enquanto a soma for menor que 100
-  console.log("--- Questão 3 (ENQUANTO): Ler valores enquanto soma < 100 ---");
-  let somaAcumulada = 0;
-  while (somaAcumulada < 100) {
-    const valor = parseFloat(await askQuestion(`Soma atual: ${somaAcumulada}. Digite um valor a somar: `));
-    somaAcumulada += valor;
-  }
-  console.log(`Soma atingiu ou ultrapassou 100! Soma final: ${somaAcumulada}\n`);
-
-  // ENQUANTO 4: Imprimir números de 10 até 1
-  console.log("--- Questão 4 (ENQUANTO): Números de 10 até 1 ---");
-  let regressivo = 10;
-  while (regressivo >= 1) {
-    console.log(regressivo);
-    regressivo--;
-  }
-  console.log("");
-
-  // ==================================================================
-  // SEÇÃO 3: LAÇO DE REPETIÇÃO REPITA (do...while)
-  // ==================================================================
-  console.log("=== SEÇÃO 3: LAÇO REPITA (do...while) ===\n");
-
-  // REPITA 1: Menu que repete até escolher sair
-  console.log("--- Questão 1 (REPITA): Menu interativo ---");
-  let opcaoMenu;
-  do {
-    console.log("===== MENU =====");
-    console.log("1 - Opção A");
-    console.log("2 - Opção B");
-    console.log("0 - Sair");
-    opcaoMenu = await askQuestion("Escolha uma opção: ");
-    
-    if (opcaoMenu === '1') {
-      console.log("Você escolheu a Opção A!\n");
-    } else if (opcaoMenu === '2') {
-      console.log("Você escolheu a Opção B!\n");
-    } else if (opcaoMenu !== '0') {
-      console.log("Opção inválida! Tente novamente.\n");
+  // ------------------------------------------------------------------
+  // QUESTÃO 4: Verificar se um número existe no vetor e mostrar posição
+  // ------------------------------------------------------------------
+  console.log("--- Questão 4: Buscar Número no Vetor ---");
+  const vetorQ4 = [15, 28, 42, 7, 99, 53, 10, 84, 23, 61];
+  console.log(`Vetor cadastrado: [${vetorQ4.join(', ')}]`);
+  const numBuscaInput = await askQuestion("Digite um número para buscar no vetor: ");
+  const numBusca = parseInt(numBuscaInput);
+  
+  const posicoesEncontradasQ4 = [];
+  // Percorre o vetor e guarda cada índice onde o número buscado aparece.
+  for (let i = 0; i < vetorQ4.length; i++) {
+    if (vetorQ4[i] === numBusca) {
+      posicoesEncontradasQ4.push(i);
     }
-  } while (opcaoMenu !== '0');
-  console.log("Saindo do menu...\n");
+  }
 
-  // REPITA 2: Repetir até digitar um número múltiplo de 5
-  console.log("--- Questão 2 (REPITA): Repetir até múltiplo de 5 ---");
-  let numMult5;
-  do {
-    numMult5 = parseInt(await askQuestion("Digite um número (para se for múltiplo de 5): "));
-  } while (numMult5 % 5 !== 0);
-  console.log(`O número ${numMult5} é múltiplo de 5! Encerrado.\n`);
+  if (posicoesEncontradasQ4.length > 0) {
+    console.log(`O número ${numBusca} foi encontrado no vetor na(s) posição(ões) (índice): ${posicoesEncontradasQ4.join(', ')}\n`);
+  } else {
+    console.log(`O número ${numBusca} NÃO existe no vetor.\n`);
+  }
 
-  // REPITA 3: Ler notas de alunos até o usuário decidir parar
-  console.log("--- Questão 3 (REPITA): Ler notas até decidir parar ---");
-  let continuarNotas;
-  const notasAlunos = [];
-  do {
-    const nota = parseFloat(await askQuestion("Digite a nota do aluno: "));
-    notasAlunos.push(nota);
-    continuarNotas = await askQuestion("Deseja cadastrar outra nota? (s/n): ");
-  } while (continuarNotas.toLowerCase() === 's');
-  console.log(`Notas cadastradas: [${notasAlunos.join(', ')}]\n`);
+  // ------------------------------------------------------------------
+  // QUESTÃO 5: Total de litros de refrigerante comprados
+  // ------------------------------------------------------------------
+  console.log("--- Questão 5: Fábrica de Refrigerantes Meia-Cola ---");
+  const qtdLataInput = await askQuestion("Digite a quantidade de latas de 350ml: ");
+  const qtdGarrafa600Input = await askQuestion("Digite a quantidade de garrafas de 600ml: ");
+  const qtdGarrafa2LInput = await askQuestion("Digite a quantidade de garrafas de 2L: ");
 
-  // REPITA 4: Ler números positivos, parar quando digitar zero
-  console.log("--- Questão 4 (REPITA): Ler positivos até digitar 0 ---");
-  let numPos;
-  do {
-    numPos = parseFloat(await askQuestion("Digite um número positivo (ou 0 para parar): "));
-    if (numPos > 0) {
-      console.log(`Número aceito: ${numPos}`);
+  const qtdLata = parseInt(qtdLataInput) || 0;
+  const qtdGarrafa600 = parseInt(qtdGarrafa600Input) || 0;
+  const qtdGarrafa2L = parseInt(qtdGarrafa2LInput) || 0;
+
+  // Conversão de ml para litros: 350ml = 0.35L, 600ml = 0.6L, 2L = 2L
+  // Multiplica cada quantidade pelo volume da embalagem e soma os resultados.
+  const totalLitros = (qtdLata * 0.35) + (qtdGarrafa600 * 0.6) + (qtdGarrafa2L * 2.0);
+  console.log(`O comerciante comprou um total de ${totalLitros.toFixed(2)} litros de refrigerante.\n`);
+
+  // ------------------------------------------------------------------
+  // QUESTÃO 6: Ler 15 números, exibir o vetor e posições dos múltiplos de 10
+  // ------------------------------------------------------------------
+  console.log("--- Questão 6: Vetor de 15 Números e Múltiplos de 10 ---");
+  const vetorQ6 = [];
+  console.log("Digite 15 números inteiros:");
+  for (let i = 0; i < 15; i++) {
+    const valInput = await askQuestion(`Número ${i + 1}/15: `);
+    // Converte a resposta para inteiro; se for inválida, usa zero.
+    vetorQ6.push(parseInt(valInput) || 0);
+  }
+
+  console.log(`\nVetor completo digitado: [${vetorQ6.join(', ')}]`);
+  console.log("Múltiplos de 10 encontrados:");
+  let achouMultiplo10 = false;
+  for (let i = 0; i < vetorQ6.length; i++) {
+    // O resto zero na divisão por 10 identifica múltiplos de 10.
+    if (vetorQ6[i] % 10 === 0) {
+      console.log(` -> Valor ${vetorQ6[i]} digitado na posição (índice) ${i}`);
+      achouMultiplo10 = true;
     }
-  } while (numPos !== 0);
-  console.log("Zero digitado! Programa finalizado.\n");
+  }
+  if (!achouMultiplo10) {
+    console.log("Nenhum múltiplo de 10 foi digitado.");
+  }
+  console.log("");
+
+  // ------------------------------------------------------------------
+  // QUESTÃO 7: Ler 10 números, mostrar pares e suas posições
+  // ------------------------------------------------------------------
+  console.log("--- Questão 7: Números Pares e Suas Posições ---");
+  const vetorQ7 = [];
+  console.log("Digite 10 números inteiros:");
+  for (let i = 0; i < 10; i++) {
+    const valInput = await askQuestion(`Número ${i + 1}/10: `);
+    vetorQ7.push(parseInt(valInput) || 0);
+  }
+
+  console.log("\nNúmeros pares digitados e suas posições:");
+  let achouPar = false;
+  for (let i = 0; i < vetorQ7.length; i++) {
+    // O resto zero na divisão por 2 identifica números pares.
+    if (vetorQ7[i] % 2 === 0) {
+      console.log(` -> Número par ${vetorQ7[i]} na posição (índice) ${i}`);
+      achouPar = true;
+    }
+  }
+  if (!achouPar) {
+    console.log("Nenhum número par foi digitado.");
+  }
+  console.log("");
+
+  // ------------------------------------------------------------------
+  // QUESTÃO 8: Idades de 8 pessoas (Média, >25 anos, Maior idade e posições)
+  // ------------------------------------------------------------------
+  console.log("--- Questão 8: Análise de Idade de 8 Pessoas ---");
+  const idades = [];
+  console.log("Digite a idade de 8 pessoas:");
+  for (let i = 0; i < 8; i++) {
+    const idadeInput = await askQuestion(`Idade da pessoa ${i + 1}/8: `);
+    idades.push(parseInt(idadeInput) || 0);
+  }
+
+  // a) Média de idade
+  // reduce soma as idades; a soma é dividida pelo número de pessoas.
+  const somaIdades = idades.reduce((acc, curr) => acc + curr, 0);
+  const mediaIdade = somaIdades / idades.length;
+
+  // b) Posições das pessoas com mais de 25 anos
+  const posicoesMais25 = [];
+  for (let i = 0; i < idades.length; i++) {
+    if (idades[i] > 25) {
+      posicoesMais25.push(i);
+    }
+  }
+
+  // c) Maior idade digitada
+  // Math.max retorna a maior idade; ...idades passa cada idade como argumento.
+  const maiorIdade = Math.max(...idades);
+
+  // d) Posições da maior idade
+  const posicoesMaiorIdade = [];
+  for (let i = 0; i < idades.length; i++) {
+    if (idades[i] === maiorIdade) {
+      posicoesMaiorIdade.push(i);
+    }
+  }
+
+  console.log("\n--- RESULTADOS DA QUESTÃO 8 ---");
+  console.log(`a) Média de idade das pessoas cadastradas: ${mediaIdade.toFixed(2)} anos`);
+  
+  if (posicoesMais25.length > 0) {
+    console.log(`b) Pessoas com mais de 25 anos estão nas posições (índices): ${posicoesMais25.join(', ')}`);
+  } else {
+    console.log("b) Não há pessoas com mais de 25 anos cadastradas.");
+  }
+
+  console.log(`c) Maior idade digitada: ${maiorIdade} anos`);
+  console.log(`d) Posições onde a maior idade foi digitada (índices): ${posicoesMaiorIdade.join(', ')}\n`);
 
   console.log("==================================================");
-  console.log("           FIM DA EXECUÇÃO DA LISTA 2             ");
+  console.log("           FIM DA EXECUÇÃO DAS QUESTÕES           ");
   console.log("==================================================");
 
   rl.close();
 }
 
-executarLista2();
+// Chama main() para começar a execução do programa.
+main();
